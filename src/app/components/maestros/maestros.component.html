@@ -1,0 +1,57 @@
+<h2>Página de Maestros</h2>
+
+<div class="container">
+  <div>
+    <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Maestro</button>
+    <button class="btn btn-warning" (click)="loadTeachers()">Actualizar</button>
+  </div>
+
+  <hr>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let maestro of teachers">
+        <td>{{ maestro.name }}</td>
+        <td>{{ maestro.email }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteTeacher(maestro.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal para agregar maestro -->
+  <div class="modal fade" id="modalAgregarMaestro" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Agregar Maestro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="name" [(ngModel)]="nuevoMaestro.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" [(ngModel)]="nuevoMaestro.email" name="email" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="agregarMaestro()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

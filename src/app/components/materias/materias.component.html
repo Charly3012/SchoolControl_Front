@@ -1,0 +1,102 @@
+<h2>Página de Materias</h2>
+
+<div class="container">
+  <div>
+    <button class="btn btn-primary" (click)="abrirModalAgregar()">Agregar Materia</button>
+    <button class="btn btn-warning" (click)="loadSubjects()">Actualizar</button>
+  </div>
+
+  <hr>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Código</th>
+        <th>Maestro responsable</th>
+        <th>Créditos</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let materia of subjects">
+        <td>{{ materia.name }}</td>
+        <td>{{ materia.code }}</td>
+        <td>{{ materia.teacher.name }}</td>
+        <td>{{ materia.credits }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteSubject(materia.id)">Eliminar</button>
+          <button class="btn btn-warning" (click)="abrirModalReasignar(materia)">Reasignar materia</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal para agregar materia -->
+  <div class="modal fade" id="modalAgregarMateria" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Agregar Materia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="name" [(ngModel)]="nuevaMateria.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="code" class="form-label">Código</label>
+              <input type="text" class="form-control" id="code" [(ngModel)]="nuevaMateria.code" name="code" required>
+            </div>
+            <div class="mb-3">
+              <label for="credits" class="form-label">Créditos</label>
+              <input type="number" class="form-control" id="credits" [(ngModel)]="nuevaMateria.credits" name="credits" required>
+            </div>
+            <div class="mb-3">
+              <label for="teacherId" class="form-label">Maestro</label>
+              <select class="form-select" [(ngModel)]="nuevaMateria.teacherId" name="teacherId" required>
+                <option *ngFor="let maestro of teachers" [value]="maestro.id">
+                  {{ maestro.name }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="agregarMateria()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para reasignar materia -->
+  <div class="modal fade" id="modalReasignarMateria" tabindex="-1" aria-labelledby="modalReasignarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalReasignarLabel">Reasignar Materia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="newTeacherId" class="form-label">Nuevo Maestro</label>
+              <select class="form-select" [(ngModel)]="nuevaReasignacion.newTeacherId" name="newTeacherId" required>
+                <option *ngFor="let maestro of teachers" [value]="maestro.id">
+                  {{ maestro.name }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-warning" (click)="reasignarMateria()">Reasignar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
